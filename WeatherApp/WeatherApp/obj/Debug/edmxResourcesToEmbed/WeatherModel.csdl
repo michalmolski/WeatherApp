@@ -1,0 +1,103 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="WeatherDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="City">
+    <Key>
+      <PropertyRef Name="Cityid" />
+    </Key>
+    <Property Name="Cityid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CityName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="WeatherHistory" Relationship="Self.FkCity" FromRole="City" ToRole="WeatherHistory" />
+  </EntityType>
+  <EntityType Name="DbUser">
+    <Key>
+      <PropertyRef Name="Userid" />
+    </Key>
+    <Property Name="Userid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TypeOfUser" Type="Int32" />
+    <Property Name="UserPassword" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="UserLogin" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="DbUserType" Relationship="Self.FkDbUserType" FromRole="DbUser" ToRole="DbUserType" />
+  </EntityType>
+  <EntityType Name="DbUserType">
+    <Key>
+      <PropertyRef Name="Typeid" />
+    </Key>
+    <Property Name="Typeid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TypeName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="DbUser" Relationship="Self.FkDbUserType" FromRole="DbUserType" ToRole="DbUser" />
+  </EntityType>
+  <EntityType Name="WeatherHistory">
+    <Key>
+      <PropertyRef Name="Historyid" />
+    </Key>
+    <Property Name="Historyid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="city" Type="Int32" />
+    <Property Name="Temperature" Type="Double" />
+    <Property Name="WeatherDate" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="City1" Relationship="Self.FkCity" FromRole="WeatherHistory" ToRole="City" />
+    <Property Name="Pressure" Type="Double" />
+    <Property Name="Humidity" Type="Double" />
+    <Property Name="WindSpeed" Type="Double" />
+  </EntityType>
+  <EntityType Name="vWeatherHistory">
+    <Key>
+      <PropertyRef Name="Historyid" />
+    </Key>
+    <Property Name="Historyid" Type="Int32" Nullable="false" />
+    <Property Name="CityName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Temperature" Type="Double" />
+    <Property Name="WeatherDate" Type="DateTime" Precision="3" />
+    <Property Name="Pressure" Type="Double" />
+    <Property Name="Humidity" Type="Double" />
+    <Property Name="WindSpeed" Type="Double" />
+  </EntityType>
+  <Association Name="FkCity">
+    <End Role="City" Type="Self.City" Multiplicity="0..1" />
+    <End Role="WeatherHistory" Type="Self.WeatherHistory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="City">
+        <PropertyRef Name="Cityid" />
+      </Principal>
+      <Dependent Role="WeatherHistory">
+        <PropertyRef Name="city" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FkDbUserType">
+    <End Role="DbUserType" Type="Self.DbUserType" Multiplicity="0..1" />
+    <End Role="DbUser" Type="Self.DbUser" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DbUserType">
+        <PropertyRef Name="Typeid" />
+      </Principal>
+      <Dependent Role="DbUser">
+        <PropertyRef Name="TypeOfUser" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="WeatherDBEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="City" EntityType="Self.City" />
+    <EntitySet Name="DbUser" EntityType="Self.DbUser" />
+    <EntitySet Name="DbUserType" EntityType="Self.DbUserType" />
+    <EntitySet Name="WeatherHistory" EntityType="Self.WeatherHistory" />
+    <EntitySet Name="vWeatherHistory" EntityType="Self.vWeatherHistory" />
+    <AssociationSet Name="FkCity" Association="Self.FkCity">
+      <End Role="City" EntitySet="City" />
+      <End Role="WeatherHistory" EntitySet="WeatherHistory" />
+    </AssociationSet>
+    <AssociationSet Name="FkDbUserType" Association="Self.FkDbUserType">
+      <End Role="DbUserType" EntitySet="DbUserType" />
+      <End Role="DbUser" EntitySet="DbUser" />
+    </AssociationSet>
+    <EntitySet Name="vUsers" EntityType="WeatherDBModel.vUsers" />
+  </EntityContainer>
+  <EntityType Name="vUsers">
+    <Key>
+      <PropertyRef Name="Userid" />
+    </Key>
+    <Property Name="Userid" Type="Int32" Nullable="false" />
+    <Property Name="TypeName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="UserLogin" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="UserPassword" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+  </EntityType>
+</Schema>

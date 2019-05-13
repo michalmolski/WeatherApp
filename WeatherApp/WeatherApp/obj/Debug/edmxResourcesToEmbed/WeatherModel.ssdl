@@ -1,0 +1,120 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="WeatherDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="City">
+    <Key>
+      <PropertyRef Name="Cityid" />
+    </Key>
+    <Property Name="Cityid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CityName" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="DbUser">
+    <Key>
+      <PropertyRef Name="Userid" />
+    </Key>
+    <Property Name="Userid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TypeOfUser" Type="int" />
+    <Property Name="UserPassword" Type="nvarchar" MaxLength="20" />
+    <Property Name="UserLogin" Type="nvarchar" MaxLength="20" />
+  </EntityType>
+  <EntityType Name="DbUserType">
+    <Key>
+      <PropertyRef Name="Typeid" />
+    </Key>
+    <Property Name="Typeid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TypeName" Type="nvarchar" MaxLength="20" />
+  </EntityType>
+  <EntityType Name="WeatherHistory">
+    <Key>
+      <PropertyRef Name="Historyid" />
+    </Key>
+    <Property Name="Historyid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="city" Type="int" />
+    <Property Name="Temperature" Type="float" />
+    <Property Name="Pressure" Type="float" />
+    <Property Name="Humidity" Type="float" />
+    <Property Name="WindSpeed" Type="float" />
+    <Property Name="WeatherDate" Type="datetime" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'WeatherDB.dbo.vUsers' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="vUsers">
+    <Key>
+      <PropertyRef Name="Userid" />
+    </Key>
+    <Property Name="Userid" Type="int" Nullable="false" />
+    <Property Name="TypeName" Type="nvarchar" MaxLength="20" />
+    <Property Name="UserLogin" Type="nvarchar" MaxLength="20" />
+    <Property Name="UserPassword" Type="nvarchar" MaxLength="20" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'WeatherDB.dbo.vWeatherHistory' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="vWeatherHistory">
+    <Key>
+      <PropertyRef Name="Historyid" />
+    </Key>
+    <Property Name="Historyid" Type="int" Nullable="false" />
+    <Property Name="CityName" Type="nvarchar" MaxLength="50" />
+    <Property Name="Temperature" Type="float" />
+    <Property Name="Pressure" Type="float" />
+    <Property Name="Humidity" Type="float" />
+    <Property Name="WindSpeed" Type="float" />
+    <Property Name="WeatherDate" Type="datetime" />
+  </EntityType>
+  <Association Name="FkCity">
+    <End Role="City" Type="Self.City" Multiplicity="0..1" />
+    <End Role="WeatherHistory" Type="Self.WeatherHistory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="City">
+        <PropertyRef Name="Cityid" />
+      </Principal>
+      <Dependent Role="WeatherHistory">
+        <PropertyRef Name="city" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FkDbUserType">
+    <End Role="DbUserType" Type="Self.DbUserType" Multiplicity="0..1" />
+    <End Role="DbUser" Type="Self.DbUser" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DbUserType">
+        <PropertyRef Name="Typeid" />
+      </Principal>
+      <Dependent Role="DbUser">
+        <PropertyRef Name="TypeOfUser" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="WeatherDBModelStoreContainer">
+    <EntitySet Name="City" EntityType="Self.City" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DbUser" EntityType="Self.DbUser" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DbUserType" EntityType="Self.DbUserType" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="WeatherHistory" EntityType="Self.WeatherHistory" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="vUsers" EntityType="Self.vUsers" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [vUsers].[Userid] AS [Userid], 
+    [vUsers].[TypeName] AS [TypeName], 
+    [vUsers].[UserLogin] AS [UserLogin], 
+    [vUsers].[UserPassword] AS [UserPassword]
+    FROM [dbo].[vUsers] AS [vUsers]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="vWeatherHistory" EntityType="Self.vWeatherHistory" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [vWeatherHistory].[Historyid] AS [Historyid], 
+    [vWeatherHistory].[CityName] AS [CityName], 
+    [vWeatherHistory].[Temperature] AS [Temperature], 
+    [vWeatherHistory].[Pressure] AS [Pressure], 
+    [vWeatherHistory].[Humidity] AS [Humidity], 
+    [vWeatherHistory].[WindSpeed] AS [WindSpeed], 
+    [vWeatherHistory].[WeatherDate] AS [WeatherDate]
+    FROM [dbo].[vWeatherHistory] AS [vWeatherHistory]</DefiningQuery>
+    </EntitySet>
+    <AssociationSet Name="FkCity" Association="Self.FkCity">
+      <End Role="City" EntitySet="City" />
+      <End Role="WeatherHistory" EntitySet="WeatherHistory" />
+    </AssociationSet>
+    <AssociationSet Name="FkDbUserType" Association="Self.FkDbUserType">
+      <End Role="DbUserType" EntitySet="DbUserType" />
+      <End Role="DbUser" EntitySet="DbUser" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

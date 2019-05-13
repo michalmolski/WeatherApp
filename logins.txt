@@ -1,0 +1,6 @@
+standard user:
+Login: user
+Passwoer: user
+Admin:
+Login: admin
+Passwoer: admin

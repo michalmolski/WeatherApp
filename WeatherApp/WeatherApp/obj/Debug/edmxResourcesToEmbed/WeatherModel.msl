@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="WeatherDBModelStoreContainer" CdmEntityContainer="WeatherDBEntities">
+    <EntitySetMapping Name="City">
+      <EntityTypeMapping TypeName="WeatherDBModel.City">
+        <MappingFragment StoreEntitySet="City">
+          <ScalarProperty Name="Cityid" ColumnName="Cityid" />
+          <ScalarProperty Name="CityName" ColumnName="CityName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DbUser">
+      <EntityTypeMapping TypeName="WeatherDBModel.DbUser">
+        <MappingFragment StoreEntitySet="DbUser">
+          <ScalarProperty Name="Userid" ColumnName="Userid" />
+          <ScalarProperty Name="TypeOfUser" ColumnName="TypeOfUser" />
+          <ScalarProperty Name="UserPassword" ColumnName="UserPassword" />
+          <ScalarProperty Name="UserLogin" ColumnName="UserLogin" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DbUserType">
+      <EntityTypeMapping TypeName="WeatherDBModel.DbUserType">
+        <MappingFragment StoreEntitySet="DbUserType">
+          <ScalarProperty Name="Typeid" ColumnName="Typeid" />
+          <ScalarProperty Name="TypeName" ColumnName="TypeName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="WeatherHistory">
+      <EntityTypeMapping TypeName="WeatherDBModel.WeatherHistory">
+        <MappingFragment StoreEntitySet="WeatherHistory">
+          <ScalarProperty Name="WindSpeed" ColumnName="WindSpeed" />
+          <ScalarProperty Name="Humidity" ColumnName="Humidity" />
+          <ScalarProperty Name="Pressure" ColumnName="Pressure" />
+          <ScalarProperty Name="Historyid" ColumnName="Historyid" />
+          <ScalarProperty Name="city" ColumnName="city" />
+          <ScalarProperty Name="Temperature" ColumnName="Temperature" />
+          <ScalarProperty Name="WeatherDate" ColumnName="WeatherDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="vWeatherHistory">
+      <EntityTypeMapping TypeName="WeatherDBModel.vWeatherHistory">
+        <MappingFragment StoreEntitySet="vWeatherHistory">
+          <ScalarProperty Name="WindSpeed" ColumnName="WindSpeed" />
+          <ScalarProperty Name="Humidity" ColumnName="Humidity" />
+          <ScalarProperty Name="Pressure" ColumnName="Pressure" />
+          <ScalarProperty Name="Historyid" ColumnName="Historyid" />
+          <ScalarProperty Name="CityName" ColumnName="CityName" />
+          <ScalarProperty Name="Temperature" ColumnName="Temperature" />
+          <ScalarProperty Name="WeatherDate" ColumnName="WeatherDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="vUsers">
+      <EntityTypeMapping TypeName="WeatherDBModel.vUsers">
+        <MappingFragment StoreEntitySet="vUsers">
+          <ScalarProperty Name="UserPassword" ColumnName="UserPassword" />
+          <ScalarProperty Name="UserLogin" ColumnName="UserLogin" />
+          <ScalarProperty Name="TypeName" ColumnName="TypeName" />
+          <ScalarProperty Name="Userid" ColumnName="Userid" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>
